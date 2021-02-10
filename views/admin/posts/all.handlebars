@@ -1,0 +1,21 @@
+<h2>Manage posts</h2>
+<hr>
+{{#each posts}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h4>{{title}}</h4>
+            {{description}} <br>
+            <strong>Category</strong>: {{category}} <br>
+            <strong>Slug</strong>: <u><a href="/admin/posts/read/{{slug}}">{{slug}}</a></u> <br>
+            <strong>Author</strong>: <u><a href="/admin/users/{{author}}">{{author}}</a></u> <br>
+            <small style="color: gray;">Written at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+            <a href="/admin/posts/read/{{slug}}"><button class="btn btn-outline-info mt-2">Read post</button></a>
+            <a href="/admin/posts/edit/{{slug}}"><button class="btn btn-outline-primary mt-2">Edit post</button></a>
+            <a href="/admin/posts/delete/{{slug}}"><button class="btn btn-outline-danger mt-2">Delete post</button></a>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: grey;">There are no posts to be shown.</h5>
+{{/each}}
+<a href="/admin/posts/add"><button class="btn btn-outline-primary mt-4">Create post</button></a> <br>
+<a href="/admin"><button class="btn btn-secondary mt-2">Back</button></a>

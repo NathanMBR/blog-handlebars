@@ -1,0 +1,13 @@
+<h2>All categories</h2>
+<hr>
+{{#each categories}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>Category</strong>: {{category}} <br>
+            <strong>Slug</strong>: <u><a href="/categories/more/{{slug}}">{{slug}}</a></u> <br>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: gray;">There's no created categories.</h5>
+{{/each}}
+<a href="/"><button class="btn btn-secondary mt-2">Back</button></a>

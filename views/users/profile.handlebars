@@ -1,0 +1,73 @@
+<h2>{{user.username}}'s Profile</h2>
+<div class="card">
+    <div class="card-body">
+        <div style="display: inline-block;">
+            <a href="{{url}}" target="_blank"><img src="{{url}}" style="border: hidden 1px; border-radius: 50%;" alt="Foto de Perfil" width="100" height="100"></a>
+        </div>
+        <div style="display: inline-block;">
+            <br>
+            Username: {{user.username}} <br>
+            {{#equal user.username username}}
+                E-mail: {{../user.email}}
+            {{else}}
+                {{#if ../profile.isEmailPublic}}
+                    E-mail: {{../user.email}}
+                {{else}}
+                    E-mail: <span style="font-style: italic; color: gray;">private</span>
+                {{/if}}
+            {{/equal}}
+            <br>
+            Joined on: {{#dateFormatter user.date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter user.date 5}}{{formattedDate}}{{/dateFormatter}}
+            {{#equal user.username username}}
+                <br>
+                <a href="/users/profile/{{../user.username}}/edit"><button class="btn btn-outline-primary">Edit profile</button></a>
+            {{else}}
+            {{/equal}}
+        </div>
+        <hr>
+        {{#if user.role}}
+            <h4>All posts ({{posts.length}})</h4>
+            {{#each posts}}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5>{{title}}</h5>
+                    <p style="margin-bottom: 0;">{{description}}</p>
+                    <small style="color: gray;">Written at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+                    <a href="/read/{{slug}}"><button class="btn btn-outline-info mt-2">Read</button></a>
+                </div>
+            </div>
+            {{else}}
+                <small style="color: gray;">This user hasn't yet posted anything.</small>
+            {{/each}}
+        {{/if}}
+        <br>
+        <h4>All commentaries ({{commentaries.length}})</h4>
+        {{#each commentaries}}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5>Post: <a href="/read/{{post}}">{{post}}</a></h5>
+                    Commentary: {{commentary}} <br>
+                    <small style="color: gray;">Commented at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+                </div>
+            </div>
+        {{else}}
+            <small style="color: gray;">There's no commentaries to be shown.</small>
+            <br>
+        {{/each}}
+        <br>
+        <h4>All answers ({{answers.length}})</h4>
+        {{#each answers}}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5>Post: <a href="/read/{{post}}">{{post}}</a></h5>
+                    Answer: {{commentary}} <br>
+                    <small style="color: gray;">Answered at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+                </div>
+            </div>
+        {{else}}
+            <small style="color: gray;">There's no answers to be shown.</small>
+        {{/each}}
+    </div>
+</div>
+
+<a href="/home"><button class="btn btn-secondary mt-4">Back</button></a>

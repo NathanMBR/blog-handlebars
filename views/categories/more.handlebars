@@ -1,0 +1,25 @@
+<h2>See category: {{category.category}}</h2>
+<hr>
+<div class="card mb-4">
+    <div class="card-body">
+        <strong>Category</strong>: {{category.category}} <br>
+        <strong>Slug</strong>: <u>{{category.slug}}</u> <br>
+        <small style="color: gray;">Created at {{#dateFormatter category.date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter category.date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+    </div>
+</div>
+<h2>All posts from {{category.category}} category</h2>
+<hr>
+{{#each posts}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>Title</strong>: {{title}} <br>
+            <strong>Slug</strong>: <u><a href="/read/{{slug}}">{{slug}}</a></u> <br>
+            <strong>Description</strong>: {{description}} <br>
+            <strong>Author</strong>: <u><a href="/users/profile/{{author}}">{{author}}</a></u> <br>
+            <small style="color: gray;">Created at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: grey;">There's no posts in this category.</h5>
+{{/each}}
+<a href="/categories"><button class="btn btn-secondary mt-2">Back</button></a>

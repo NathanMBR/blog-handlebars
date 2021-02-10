@@ -1,0 +1,32 @@
+<h2>Edit profile</h2>
+<hr>
+<div class="card mt-2">
+    <div class="card-body">
+        {{#if profile.isEmailPublic}}<input type="hidden" name="isPublic" id="isPublic">{{else}}{{/if}}
+        <form action="/users/profile/edit" method="post" enctype="multipart/form-data">
+            <input type="checkbox" id="publicEmail" name="publicEmail">
+            <label for="publicEmail" >Show your e-mail in your profile page</label> <br>
+
+            <input type="file" name="photo"> <br>
+            <label for="photo">Change profile picture</label> <br>
+
+            <input type="hidden" name="user" value="{{user.username}}">
+
+            <button type="submit" class="btn btn-outline-success mt-4">Save changes</button>
+        </form>
+    </div>
+</div>
+<a href="/users/profile/{{user.username}}"><button class="btn btn-secondary mt-4">Back</button></a>
+<script>
+    // Functions
+    
+    const isModified = () => {
+
+    }
+
+    // Initial Setup
+    window.onload = () => {
+        document.querySelector("#isPublic") ? document.querySelector("#publicEmail").checked = true : document.querySelector("#publicEmail").checked = false;
+        isModified();
+    }
+</script>

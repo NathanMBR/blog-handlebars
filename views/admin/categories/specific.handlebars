@@ -1,0 +1,30 @@
+<h2>Manage category: {{category.category}}</h2>
+<hr>
+<div class="card mb-4">
+    <div class="card-body">
+        <strong>Category</strong>: {{category.category}} <br>
+        <strong>Slug</strong>: <u>{{category.slug}}</u> <br>
+        <small style="color: gray;">Created at {{#dateFormatter category.date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter category.date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+        <a href="/admin/categories/edit/{{category.slug}}"><button class="btn btn-outline-info mt-3">Edit</button></a>
+        <a href="/admin/categories/delete/{{category.slug}}"><button class="btn btn-outline-danger mt-3">Delete</button></a>
+    </div>
+</div>
+<h2>All posts from {{category.category}} category</h2>
+<hr>
+{{#each posts}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>Title</strong>: {{title}} <br>
+            <strong>Slug</strong>: <u><a href="/admin/posts/read/{{slug}}">{{slug}}</a></u> <br>
+            <strong>Description</strong>: {{description}} <br>
+            <strong>Author</strong>: <u><a href="/users/{{author}}">{{author}}</a></u> <br>
+            <small style="color: gray;">Written at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: grey;">There's no posts in this category.</h5>
+    <a href="/admin/posts/add"><button class="btn btn-outline-primary mt-2">Create post</button></a> <br>
+    <hr>
+{{/each}}
+<a href="/admin/categories/add"><button class="btn btn-outline-primary mt-4">Add another category</button></a> <br>
+<a href="/admin/categories"><button class="btn btn-secondary mt-2">Back</button></a>

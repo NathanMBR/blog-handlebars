@@ -1,0 +1,155 @@
+<style>
+    .profilePhoto {
+        border: hidden 1px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+</style>
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h1>{{post.title}}</h1>
+        <small>{{post.description}}</small> <br>
+        <small style="color: gray;">Written by <a href="/users/profile/{{post.author}}">{{post.author}}</a> at {{#dateFormatter post.date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter post.date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+        <hr>
+        {{post.post}} <br>
+        <a href="/admin/posts/edit/{{post.slug}}"><button class="btn btn-outline-primary mt-3">Edit</button></a>
+        <a href="/admin/posts/delete/{{post.slug}}"><button class="btn btn-outline-danger mt-3">Delete</button></a>
+    </div>
+</div>
+<hr style="margin-top: 30px;">
+<h3 class="mt-4">Commentaries</h3>
+<div class="card mt-2">
+    <div class="card-body">
+        <form action="/read" method="POST">
+            <input type="hidden" name="author" value="{{username}}">
+            <input type="hidden" name="post" value="{{post.slug}}">
+
+            <label for="commentary">Add commentary</label>
+            <textarea name="commentary" placeholder="Your commentary..." class="form-control mb-2" required></textarea>
+
+            <button type="submit" class="btn btn-outline-success">Comment</button>
+        </form>
+    </div>
+</div>
+{{#each commentaries}}
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="profilePicHolder" style="display: inline-block;">
+                <img src="/img/user/{{author}}.png" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                <img src="/img/user/{{author}}.jpg" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                <img src="/img/user/{{author}}.jpeg" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                <img src="/img/user/{{author}}.gif" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+            </div>
+            <div style="display: inline-block;">
+                <a href="/users/profile/{{author}}"><h5>{{author}}</h5></a>
+            </div>
+            <hr>
+            <p>{{commentary}}</p>
+            <small style="color: gray;">Commented at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+            <a href="/commentary/edit/{{../_id}}"><button class="btn btn-outline-primary">Edit</button></a>
+            <a href="/commentary/delete/{{../_id}}"><button class="btn btn-outline-danger">Delete</button></a>
+            <input type="hidden" id="idInput" value="{{_id}}">
+            <br>
+            <a id="answerClick" href="javascript:showAndHide()">Answer</a>
+            <div id="dropdown-hold" style="margin: 0 0 0 0;">
+                <div id="dropdown">
+                    <form action="/answer" method="POST">
+                        <input type="hidden" name="author" value="{{../username}}">
+                        <input type="hidden" name="post" value="{{../post.slug}}">
+                        <input type="hidden" name="id" id="formId" value="">
+
+                        <label for="answer">Answer:</label>
+                        <textarea name="answer" placeholder="Your answer..." class="form-control mb-2" required></textarea>
+
+                        <button type="submit" class="btn btn-outline-success">Send answer</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+            {{#each ../answers}} 
+                {{#equal reference ../_id}}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <div class="profilePicHolder" style="display: inline-block;">
+                                <img src="/img/user/{{../author}}.png" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                                <img src="/img/user/{{../author}}.jpg" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                                <img src="/img/user/{{../author}}.jpeg" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                                <img src="/img/user/{{../author}}.gif" onerror="this.parentElement.removeChild(this)" class="profilePhoto">
+                            </div>
+                            <div style="display: inline-block;">
+                                <a href="/users/profile/{{../author}}"><h5>{{../author}}</h5></a>
+                            </div>
+                            <hr>
+                            <p>{{../commentary}}</p>
+                            <small style="color: gray;">Answered at {{#dateFormatter ../date 4}}{{formattedDate}} - {{/dateFormatter}}{{#dateFormatter ../date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+                            <br>
+                            <a href="/answer/edit/{{../_id}}"><button class="btn btn-outline-primary">Edit</button></a>
+                            <a href="/answer/delete/{{../_id}}"><button class="btn btn-outline-danger">Delete</button></a>
+                        </div>
+                    </div>
+                {{else}}
+                {{/equal}}
+            {{else}}
+            {{/each}}
+            </div>
+        </div>
+    </div>
+{{else}}
+    <small style="color: gray;">There's no commentaries to be shown.</small> <br>
+{{/each}}
+<a href="/categories/more/{{category.slug}}"><button class="btn btn-outline-info mt-4 mb-2">See other posts in this category</button></a> <br>
+<a href="/home"><button class="btn btn-secondary mb-2">Back</button></a>
+
+<script>
+    // Definitions
+    let counter = 0;
+    let isAppended = [];
+    const dropdowns = [];
+
+    // Function that shows and hides the answer form
+    const showAndHide = (div, childDiv, divNumber) => {
+        if (isAppended[divNumber]) {
+            div.removeChild(childDiv);
+            document.querySelector(`#answerClick${divNumber}`).innerHTML = "Answer";
+        } else {
+            div.appendChild(childDiv);
+            document.querySelector(`#answerClick${divNumber}`).innerHTML = "Answer (hide)";
+        }
+        isAppended[divNumber] = !isAppended[divNumber];
+    }
+
+    // Initial setup
+    window.onload = () => {
+        // Load default picture
+        document.querySelectorAll(".profilePicHolder").forEach((value, index, array) => {
+            if (value.children.length === 0) {
+                const defaultProfilePic = document.createElement("img");
+                defaultProfilePic.src = "/img/user/defaultUser.png";
+                defaultProfilePic.alt = "Default Profile Picture";
+                defaultProfilePic.className = "profilePhoto";
+                value.appendChild(defaultProfilePic);
+            }
+        });
+
+        // Answer buttons
+        while (document.querySelector("#answerClick") !== null) {
+            document.querySelector(`#dropdown-hold`).id = `dropdown-hold${counter}`;
+            document.querySelector(`#dropdown`).id = `dropdown${counter}`;
+            document.querySelector(`#answerClick`).href = `javascript:showAndHide(document.querySelector("#dropdown-hold${counter}"), dropdowns[${counter}], ${counter})`;
+            document.querySelector(`#answerClick`).id = `answerClick${counter}`;
+
+            document.querySelector(`#idInput`).id = `idInput${counter}`;
+            document.querySelector(`#formId`).value = document.querySelector(`#idInput${counter}`).value;
+            document.querySelector(`#formId`).id = `#formId${counter}`;
+
+            dropdowns.push(document.querySelector(`#dropdown${counter}`));
+            isAppended.push(true);
+            counter++;
+        }
+        for (counter = 0; counter < isAppended.length; counter++) {
+            showAndHide(document.querySelector(`#dropdown-hold${counter}`), document.querySelector(`#dropdown${counter}`), counter);
+        }
+    }
+</script>

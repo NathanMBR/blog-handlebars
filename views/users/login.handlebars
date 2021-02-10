@@ -1,0 +1,16 @@
+<h2>Login</h2>
+<div class="card">
+    <div class="card-body" style="padding-bottom: 5px;">
+        <form action="/users/login" method="POST">
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" placeholder="E-mail" class="form-control mb-2" value="{{formData.email}}" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Password" class="form-control mb-2" value="{{formData.password}}" required>
+
+            <button type="submit" class="btn btn-outline-primary mb-2">Log in</button>
+        </form>
+        <small>Don't have an account? <a href="/users/signup">Sign in</a></small>
+    </div>
+</div>
+<a href="/home"><button class="btn btn-secondary mt-4">Back</button></a>

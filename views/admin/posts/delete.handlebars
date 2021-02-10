@@ -1,0 +1,22 @@
+<h2>Delete post</h2>
+<div class="card mb-2">
+    <div class="card-body">
+        <h6 style="margin-bottom: 0;">Are you sure you want to delete this post?</h6>
+        <small style="color: gray;">This action is irreversible.</small>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 style="margin-bottom: 0; margin-top: 0">{{post.title}}</h4>
+                <small style="margin-bottom: 0;">{{post.description}}</small>
+                <hr style="margin-top: 10px;">
+                <p style="margin-bottom: 0;">{{post.post}}</p>
+                <strong>Slug:</strong> {{post.slug}} <br>
+                <small style="color: gray; margin-top: 0">Written by {{post.author}} at {{#dateFormatter post.date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter post.date 5}}{{formattedDate}}{{/dateFormatter}}</small>
+            </div>
+        </div>
+        <form action="/admin/posts/delete" method="POST">
+            <input type="hidden" name="slug" value="{{post.slug}}">
+            <button type="submit" class="btn btn-outline-danger mt-4">Delete</button>
+        </form>
+    </div>
+</div>
+<a href="/admin/posts"><button class="btn btn-secondary mt-4">Back</button></a>

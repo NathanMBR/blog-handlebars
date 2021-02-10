@@ -1,0 +1,21 @@
+{{#each errors}}
+    <div class="alert alert-danger">
+        <p>{{error}}</p>
+    </div>
+{{else}}
+{{/each}}
+
+<h2>Add category</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/categories/add" method="POST">
+            <label for="category">Category: </label>
+            <input type="text" name="category" placeholder="Category name" class="form-control mb-2" required>
+            <label for="slug">Slug: </label>
+            <input type="text" name="slug" placeholder="Category slug (minimum {{minSlug}} characters)" class="form-control" required>
+            <button type="submit" class="btn btn-outline-success mt-4">Create category</button>
+        </form>
+    </div>
+</div>
+<hr>
+<a href="/admin/categories"><button class="btn btn-secondary">Back</button></a>

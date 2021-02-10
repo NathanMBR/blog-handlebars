@@ -1,0 +1,21 @@
+<h2>Manage categories</h2>
+<hr>
+{{#each categories}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <strong>Category: </strong>{{category}} <br>
+            <strong>Slug: <a href="/admin/category/{{slug}}"><u>{{slug}}</u></a></strong> <br>
+            <a href="/admin/categories/edit/{{slug}}"><button class="btn btn-outline-info mt-4">Editar</button></a>
+            <a href="/admin/categories/delete/{{slug}}"><button class="btn btn-outline-danger mt-4">Excluir</button></a>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: gray;">No category created.</h5>
+{{/each}}
+{{#if categories}}
+    <a href="/admin/categories/deleteAll"><button class="btn btn-danger mt-4">Delete ALL categories</button></a>
+    <br>
+{{else}}
+{{/if}}
+<a href="/admin/categories/add"><button class="btn btn-outline-primary mt-4">Add category</button></a> <br>
+<a href="/admin/"><button class="btn btn-secondary mt-2">Back</button></a>

@@ -1,0 +1,62 @@
+{{#each errors}}
+    <div class="alert alert-danger mb-2">
+        {{error}}
+    </div>
+{{else}}
+{{/each}}
+<h2>Create account</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/users/signup" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Your username (minimum {{minSize.username}} characters)" class="form-control mb-2" value="{{formData.username}}" id="username" onchange="testValidation(document.querySelector('#username').value)" required>
+            <div id="alertHolder"></div>
+
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" placeholder="Your email" class="form-control mb-2" value="{{formData.email}}" required>
+            <label for="email2">Confirm your e-mail:</label>
+            <input type="email" name="email2" placeholder="Confirm your e-mail" class="form-control mb-2" value="{{formData.email2}}" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Your password (minimum {{minSize.password}} characters)" class="form-control mb-2" value="{{formData.password}}" required>
+            <label for="password2">Confirm your password:</label>
+            <input type="password" name="password2" placeholder="Confirm you password" class="form-control mb-2" value="{{formData.password2}}" required>
+
+            <button type="submit" id="submitButton" class="btn btn-outline-success mt-2">Create account</button>
+        </form>
+    </div>
+</div>
+<a href="/home"><button class="btn btn-secondary mt-4 mb-2">Back</button></a>
+
+<script>
+    // HTML Declarations
+    const usernameAlert = document.createElement("div");
+    usernameAlert.innerHTML = "Invalid username.";
+    usernameAlert.className = "alert alert-danger";
+    const alertHolder = document.querySelector("#alertHolder");
+
+    // Functions
+    const testValidation = inputValue => {
+        const regExp = /[^a-zA-Z\d]/g;
+        let submitButton = document.querySelector("#submitButton");
+
+        if (inputValue.match(regExp)) {
+            if (!submitButton.disabled) {
+                alertHolder.appendChild(usernameAlert);
+            }
+            submitButton.disabled = true;
+        } else {
+            if (submitButton.disabled) {
+                alertHolder.removeChild(usernameAlert);
+            }
+            submitButton.disabled = false;
+        }
+    }
+
+    // Initial Setup
+    window.onload = () => {
+        document.onkeypress = () => {
+            testValidation(document.querySelector('#username').value);
+        };
+    }
+</script>

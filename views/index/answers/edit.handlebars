@@ -1,0 +1,14 @@
+<h2>Edit answer</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/answer/edit" method="POST">
+            <input type="hidden" name="id" value="{{answer._id}}">
+
+            <label for="answer" style="margin-bottom: 0;">Answer:</label>
+            <textarea name="answer" placeholder="Your answer..." class="form-control" required>{{answer.commentary}}</textarea>
+
+            <button type="submit" class="btn btn-outline-success mt-2">Edit answer</button>
+        </form>
+    </div>
+</div>
+<a href="/read/{{answer.post}}"><button class="btn btn-secondary mt-4">Back</button></a>

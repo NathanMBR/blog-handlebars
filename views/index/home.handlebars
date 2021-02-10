@@ -1,0 +1,26 @@
+{{#if user}}
+    <h2>Recent posts</h2>
+    <hr>
+{{else}}
+    <div class="jumbotron" style="text-align: left; padding-bottom: 10px">
+        <h1 class="display-4">Welcome to Nathan's Blog</h1>
+        <p class="lead">This is a blog made with Handlebars and Bootstrap, where you can post (if you're an administrator) and comment in the posts.</p>
+        <hr class="my-4">
+        <p style="margin-bottom: 5px;">Log in to enjoy the site!</p>
+        <a class="btn btn-outline-primary btn-lg mb-3" href="/users/login" role="button">Log in</a> <br>
+        <small style="color: gray;">Don't have an account? <a href="/users/signup">Create account</a></small>
+    </div>
+{{/if}}
+{{#each posts}}
+    <div class="card mb-2">
+        <div class="card-body">
+            <h4 class="card-title" style="margin-bottom: 0;">{{title}}</h4>
+            <p style="margin-bottom: 0;" class="card-text">{{description}}</p>
+            <strong>Category: </strong><a href="/categories/more/{{../category.category}}">{{category}}</a> <br>
+            <small style="color: gray;">Written by <a href="/users/profile/{{author}}">{{author}}</a> at {{#dateFormatter date 4}}{{formattedDate}}{{/dateFormatter}} - {{#dateFormatter date 5}}{{formattedDate}}{{/dateFormatter}}</small> <br>
+            <a href="/read/{{slug}}"><button class="btn btn-outline-info mt-3">Read</button></a>
+        </div>
+    </div>
+{{else}}
+    <h5 style="color: gray;">There is no posts to be shown.</h5>
+{{/each}}

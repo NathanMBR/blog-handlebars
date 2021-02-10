@@ -1,0 +1,13 @@
+<h2>Delete commentary</h2>
+<div class="card">
+    <div class="card-body">
+        <p>Are you sure you want to delete this commentary?</p>
+        <p>{{commentary.commentary}}</p>
+        <small style="color: gray;">This action is irreversible.</small>
+        <form action="/commentary/delete" method="POST">
+            <input type="hidden" name="id" value="{{commentary._id}}">
+            <button type="submit" class="btn btn-outline-danger">Delete commentary</button>
+        </form>
+    </div>
+</div>
+<a href="/read/{{commentary.post}}"><button class="btn btn-secondary mt-4">Back</button></a>

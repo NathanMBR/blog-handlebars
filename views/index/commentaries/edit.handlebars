@@ -1,0 +1,14 @@
+<h2>Edit commentary</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/commentary/edit" method="POST">
+            <input type="hidden" name="id" value="{{commentary._id}}">
+
+            <label for="commentary" style="margin-bottom: 0;">Commentary:</label>
+            <textarea name="commentary" placeholder="Your commentary..." class="form-control" required>{{commentary.commentary}}</textarea>
+
+            <button type="submit" class="btn btn-outline-success mt-2">Edit commentary</button>
+        </form>
+    </div>
+</div>
+<a href="/read/{{commentary.post}}"><button class="btn btn-secondary mt-4">Back</button></a>

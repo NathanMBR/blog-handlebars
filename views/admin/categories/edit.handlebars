@@ -1,0 +1,16 @@
+<h2>Edit category</h2>
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/categories/edit" method="POST">
+            <label for="category">Category: </label>
+            <input type="text" name="category" placeholder="Category's name" class="form-control mb-2" value="{{category.category}}" required>
+            <label for="slug">Slug: </label>
+            <input type="text" name="slug" placeholder="Category's slug (minimum {{minSlug}} characters)" class="form-control" value="{{category.slug}}" required>
+            <input type="hidden" name="previous_slug" value="{{category.slug}}">
+            <input type="hidden" name="id" value="{{category._id}}">
+            <button type="submit" class="btn btn-outline-success mt-4">Edit category</button>
+        </form>
+    </div>
+</div>
+<hr>
+<a href="/admin/categories"><button class="btn btn-secondary">Back</button></a>
