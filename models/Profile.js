@@ -3,7 +3,6 @@
 // Modules
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const ip = require("ip");
 
 // Model
 const Profile = new Schema({

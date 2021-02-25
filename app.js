@@ -5,7 +5,6 @@ const express = require("express");
 const app = express();
 const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
-const handlebarsAsync = require("handlebars-async");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");

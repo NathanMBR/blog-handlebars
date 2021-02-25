@@ -7,7 +7,6 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const devErrors = require("../helpers/devErrors");
 const multer = require("multer");
-const ip = require("ip");
 const fs = require("fs");
 const path = require("path");
 
